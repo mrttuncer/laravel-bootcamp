@@ -28,10 +28,13 @@ const editing = ref(false);
         <div class="flex-1">
             <div class="flex justify-between items-center">
                 <div>
-                    <span class="text-gray-800">{{ chirp.user.name }}</span>
+
+                    <a :href="route('user.show', chirp.user.id)"><span class="text-gray-800">{{ chirp.user.name
+                    }}</span></a>
                     <small class="ml-2 text-sm text-gray-600">{{ dayjs(chirp.created_at).fromNow() }}</small>
                     <small v-if="chirp.created_at !== chirp.updated_at" class="text-sm text-gray-600">
                         Güncellendi</small>
+                    <small v-if="chirp.user.id == $page.props.auth.user.id" class="text-red-500">Senin Chirpin</small>
                 </div>
                 <Dropdown v-if="chirp.user.id === $page.props.auth.user.id">
                     <template #trigger>

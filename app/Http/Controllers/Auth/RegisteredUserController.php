@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Chirp;
 
 class RegisteredUserController extends Controller
 {
@@ -57,7 +58,10 @@ class RegisteredUserController extends Controller
 
     public function show($user): Response
     {
+
         $user = User::find($user);
-        return Inertia::render('User/Show', compact('user'));
+        $chirps = Chirp::where('user_id', $user->id)->latest()->get();
+
+        return Inertia::render('User/Show', compact('user', 'chirps'));
     }
 }
